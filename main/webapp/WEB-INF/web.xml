@@ -9,4 +9,18 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  	<servlet>
+		<servlet-name>jersey-servlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.transferconnect.webservice</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jersey-servlet</servlet-name>
+		<url-pattern>/ws-rest/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
