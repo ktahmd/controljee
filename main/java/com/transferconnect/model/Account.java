@@ -6,9 +6,9 @@ public class Account {
     @JsonProperty
     private String accountId; // Identifiant unique du compte
     @JsonProperty
-    private String firstName; // Prénom de l'utilisateur
+    private String userId; // Prénom de l'utilisateur
     @JsonProperty
-    private String lastName; // Nom de l'utilisateur
+    private String Name; // Nom de l'utilisateur
     @JsonProperty
     private String nni; // Numéro National d'Identification (NNI)
     @JsonProperty
@@ -22,10 +22,10 @@ public class Account {
     public Account() {}
 
     // Constructeur avec paramètres
-    public Account(String accountId, String firstName, String lastName, String nni, String bank, double balance, String currency) {
+    public Account(String accountId, String userId, String Name, String nni, String bank, double balance, String currency) {
         this.accountId = accountId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.userId = userId;
+        this.Name = Name;
         this.nni = nni;
         this.bank = bank;
         this.balance = balance;
@@ -36,11 +36,11 @@ public class Account {
     public String getAccountId() { return accountId; }
     public void setAccountId(String accountId) { this.accountId = accountId; }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getFirstName() { return userId; }
+    public void setFirstName(String firstName) { this.userId = userId; }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getLastName() { return Name; }
+    public void setLastName(String Name) { this.Name = Name; }
 
     public String getNni() { return nni; }
     public void setNni(String nni) { this.nni = nni; }
