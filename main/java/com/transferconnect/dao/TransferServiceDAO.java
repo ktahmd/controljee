@@ -1,36 +1,52 @@
-package com.transferconnect.dao;
+package com.transferconnect.service;
 
-import com.transferconnect.model.TransferService;
-import com.transferconnect.database.InMemoryDatabase;
-
+import com.transferconnect.dao.TransferDAO;
+import com.transferconnect.model.Transfer;
 import java.util.Map;
 
-public class TransferServiceDAO {
+public class TransferService {
 
-    // Récupérer tous les services de transfert
-    public Map<String, TransferService> getAllTransferServices() {
-        return InMemoryDatabase.transferServices;
+    private final TransferDAO transferDAO;
+
+    // Constructeur pour injecter le DAO
+    public TransferService(TransferDAO transferDAO) {
+        this.transferDAO = transferDAO;
     }
 
-    // Récupérer un service de transfert par son ID
-    public TransferService getTransferServiceById(String serviceId) {
-        return InMemoryDatabase.transferServices.get(serviceId);
+    // Récupérer tous les transferts
+    public Map<String, Transfer> getAllTransfers() {
+        return transferDAO.getAllTransfers();
     }
 
-    // Ajouter un nouveau service de transfert
-    public void addTransferService(TransferService transferService) {
-        InMemoryDatabase.transferServices.put(transferService.getServiceId(), transferService);
-    }
-
-    // Mettre à jour un service de transfert existant
-    public void updateTransferService(String serviceId, TransferService updatedTransferService) {
-        if (InMemoryDatabase.transferServices.containsKey(serviceId)) {
-            InMemoryDatabase.transferServices.put(serviceId, updatedTransferService);
+    // Récupérer un transfert par son ID
+    public Transfer getTransferById(String transferId) {
+        if (transferId == null) {
+            throw new IllegalArgumentException("Transfer ID cannot be null");
         }
+        return transferDAO.getTransferById(transferId);
     }
 
-    // Supprimer un service de transfert
-    public void deleteTransferService(String serviceId) {
-        InMemoryDatabase.transferServices.remove(serviceId);
+    // Créer un nouveau transfert
+    public void createTransfer(Transfer transfer) {
+        if (transfer == null || transfer.getTransferId() == null) {
+            throw new IllegalArgumentException("Transfer or transfer ID cannot be null");
+        }
+        transferDAO.addTransfer(transfer);
+    }
+
+    // Mettre à jour un transfert existant
+    public void updateTransfer(String transferId, Transfer updatedTransfer) {
+        if (transferId == null || updatedTransfer == null) {
+            throw new IllegalArgumentException("Transfer ID or updated transfer cannot be null");
+        }
+        transferDAO.updateTransfer(transferId, updatedTransfer);
+    }
+
+    // Supprimer un transfert
+    public void deleteTransfer(String transferId) {
+        if (transferId == null) {
+            throw new IllegalArgumentException("Transfer ID cannot be null");
+        }
+        transferDAO.deleteTransfer(transferId);
     }
 }
