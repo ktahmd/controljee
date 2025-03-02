@@ -1,52 +1,49 @@
-package com.transferconnect.service;
+package com.transferconnect.dao;
 
-import com.transferconnect.dao.TransferDAO;
-import com.transferconnect.model.Transfer;
+import com.transferconnect.model.TransferService;
+import java.util.HashMap;
 import java.util.Map;
 
-public class TransferService {
+public class TransferServiceDAO {
 
-    private final TransferDAO transferDAO;
+    // Static map pour stocker les services de transfert en mémoire
+    private static Map<String, TransferService> transferServices = new HashMap<>();
 
-    // Constructeur pour injecter le DAO
-    public TransferService(TransferDAO transferDAO) {
-        this.transferDAO = transferDAO;
+    public TransferServiceDAO() {
+        // Constructeur vide
     }
 
-    // Récupérer tous les transferts
-    public Map<String, Transfer> getAllTransfers() {
-        return transferDAO.getAllTransfers();
-    }
-
-    // Récupérer un transfert par son ID
-    public Transfer getTransferById(String transferId) {
-        if (transferId == null) {
-            throw new IllegalArgumentException("Transfer ID cannot be null");
+    // Récupérer un service de transfert par son ID
+    public TransferService getTransferServiceById(String serviceId) {
+        if (serviceId == null) {
+            throw new IllegalArgumentException("Service ID cannot be null");
         }
-        return transferDAO.getTransferById(transferId);
+        return transferServices.get(serviceId);
     }
 
-    // Créer un nouveau transfert
-    public void createTransfer(Transfer transfer) {
-        if (transfer == null || transfer.getTransferId() == null) {
-            throw new IllegalArgumentException("Transfer or transfer ID cannot be null");
+    // Ajouter un nouveau service de transfert
+    public void addTransferService(TransferService service) {
+        if (service == null || service.getServiceId() == null) {
+            throw new IllegalArgumentException("Service or service ID cannot be null");
         }
-        transferDAO.addTransfer(transfer);
+        transferServices.put(service.getServiceId(), service);
     }
 
-    // Mettre à jour un transfert existant
-    public void updateTransfer(String transferId, Transfer updatedTransfer) {
-        if (transferId == null || updatedTransfer == null) {
-            throw new IllegalArgumentException("Transfer ID or updated transfer cannot be null");
+    // Mettre à jour un service de transfert existant
+    public void updateTransferService(String serviceId, TransferService updatedService) {
+        if (serviceId == null || updatedService == null) {
+            throw new IllegalArgumentException("Service ID or updated service cannot be null");
         }
-        transferDAO.updateTransfer(transferId, updatedTransfer);
+        if (transferServices.containsKey(serviceId)) {
+            transferServices.put(serviceId, updatedService);
+        }
     }
 
-    // Supprimer un transfert
-    public void deleteTransfer(String transferId) {
-        if (transferId == null) {
-            throw new IllegalArgumentException("Transfer ID cannot be null");
+    // Supprimer un service de transfert
+    public void deleteTransferService(String serviceId) {
+        if (serviceId == null) {
+            throw new IllegalArgumentException("Service ID cannot be null");
         }
-        transferDAO.deleteTransfer(transferId);
+        transferServices.remove(serviceId);
     }
 }

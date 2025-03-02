@@ -3,52 +3,100 @@ package com.transferconnect.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    @JsonProperty
-    private String id;
-    
-    @JsonProperty
-    private String name;
-    
-    @JsonProperty
-    private String passwd;
+	@JsonProperty
+    private String nni; // Numéro National d'Identité
+	/*@JsonProperty
+    private String id;*/
+	@JsonProperty
+    private String firstName;
+	@JsonProperty
+    private String lastName;
+	@JsonProperty
+    private String username;
+	@JsonProperty
+    private String password;
+	@JsonProperty
+    private Role role;
 
-    // Constructeur par défaut
-    public User() {}
-
-    // Constructeur avec paramètres
-    public User(String id, String name, String passwd) {
-        this.id = id;
-        this.name = name;
-        this.passwd = passwd;
+    public User() {
     }
 
-    // Getter pour l'attribut id
-    public String getId() {
+    public User(String id, String firstName, String lastName, String nni, String username, String password, Role role) {
+       // this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nni = nni;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getters and Setters
+    /*public String getId() {
         return id;
     }
 
-    // Setter pour l'attribut id
     public void setId(String id) {
         this.id = id;
+    }*/
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    // Getter pour l'attribut name
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    // Setter pour l'attribut name
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
     }
 
-    // Getter pour l'attribut passwd
-    public String getPasswd() {
-        return passwd;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    // Setter pour l'attribut passwd
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
+    public String getNni() {
+        return nni;
+    }
+
+    public void setNni(String nni) {
+        this.nni = nni;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                //"id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nni='" + nni + '\'' +
+                ", username='" + username + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
