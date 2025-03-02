@@ -23,10 +23,10 @@ public class UserDAO {
 
     // Ajouter un nouvel utilisateur
     public void addUser(User user) {
-        if (user == null || user.getId() == null) {
+        if (user == null || user.getNni() == null) {
             throw new IllegalArgumentException("User or user ID cannot be null");
         }
-        Users.put(user.getId(), user);
+        Users.put(user.getNni(), user);
     }
 
     // Mettre à jour un utilisateur existant
