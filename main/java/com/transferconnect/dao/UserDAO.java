@@ -10,7 +10,7 @@ public class UserDAO {
     private static Map<String, User> Users = new HashMap<>();
 
     public UserDAO() {
-        // Constructeur (peut être laissé vide)
+            Users.put("9801370078",new User("9801370078","Ahmed","medvall","ahmed23", "1234",Role.USER));  
     }
 
     // Récupérer un utilisateur par son ID
