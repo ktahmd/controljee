@@ -36,6 +36,7 @@ public class AuthorizationFilter implements Filter {
         addUrlAccessRight("/api/transfer/cancel", Role.AGENCY_MANAGER, Role.ADMIN);
         
         // URLs pour tous les utilisateurs authentifiés
+        addUrlAccessRight("/api/login/*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
         addUrlAccessRight("/api/account/*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
         addUrlAccessRight("/api/transfer/create", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
         addUrlAccessRight("/api/user/profile", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
