@@ -20,6 +20,10 @@ public class UserService {
     public User getUserById(String userId) {
         return userDAO.getUserById(userId);
     }
+    // استرجاع المستخدم عن طريق اسم المستخدم
+    public User getUserByUsername(String username) {
+        return userDAO.getUserByConstraintKey(username);
+    }
 
     // التحقق من صحة المستخدم
     public boolean validateUser(String username, String password) {
