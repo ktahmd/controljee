@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyTransfer - Création de compte</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo .money {
+            color: #3c4a63;
+            font-weight: bold;
+            font-size: 28px;
+        }
+        
+        .logo .transfer {
+            color: #5aad96;
+            font-weight: bold;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #3c4a63;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233c4a63' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+        
+        .submit-btn {
+            background-color: #5aad96;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #4a9485;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #5aad96;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #3c4a63;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">
+            <span class="money">Money</span><span class="transfer">Transfer</span>
+        </div>
+        
+        <h2 class="subtitle">Création de compte</h2>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nni">NNI (Numéro National d'Identité)</label>
+                <input type="text" id="nni" name="nni" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Service de transfert</label>
+                <select id="service" name="service" required>
+                    <option value="" disabled selected>Sélectionnez un service</option>
+                    <option value="national">Transfert National</option>
+                    <option value="international">Transfert International</option>
+                    <option value="express">Transfert Express</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Email</label>
+                <input type="email" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">S'inscrire</button>
+        </form>
+        
+        <div class="login-link">
+            Vous avez déjà un compte? <a href="login.html">Se connecter</a>
+        </div>
+        
+        <div class="social-icons">
+            <div class="social-icon">B</div>
+            <div class="social-icon">M</div>
+            <div class="social-icon">G</div>
+            <div class="social-icon">Ma</div>
+        </div>
+    </div>
+
+   <script src="assets/js/register.js"></script>	
+</body>
+</html>
