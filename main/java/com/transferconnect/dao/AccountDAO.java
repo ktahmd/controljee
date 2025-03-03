@@ -9,7 +9,7 @@ public class AccountDAO {
 	
 	private static Map<String, Account> Accounts = new HashMap<>();
   
-    public AccountDAO() {
+	static {
     	Accounts.put("80029485392",new Account("80029485392","9801370078","Bankily",12000)); 
     	Accounts.put("80053692732",new Account("80053692732","9801370078","Sadad",3000)); 
     	Accounts.put("90337388484",new Account("90337388484","9801370078","Bimbank",4000)); 

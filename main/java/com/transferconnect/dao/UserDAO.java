@@ -9,8 +9,8 @@ public class UserDAO {
     // Static map pour stocker les utilisateurs en mémoire
     private static Map<String, User> Users = new HashMap<>();
 
-    public UserDAO() {
-    	    Users.put("9801370078",new User("0000000001","system", "admin",   "admin", "admin", Role.ADMIN));
+    static {
+    	    Users.put("0000000001",new User("0000000001","system", "admin",   "admin", "admin", Role.ADMIN));
             Users.put("9801370078",new User("9801370078","Ahmed","medvall","ahmed23", "1234",Role.USER));  
     }
 
@@ -20,6 +20,18 @@ public class UserDAO {
             throw new IllegalArgumentException("User ID cannot be null");
         }
         return Users.get(userId);
+    }
+    // Get user by constraint key (e.g., username)
+    public User getUserByConstraintKey(String username) {
+        if (username == null) {
+            throw new IllegalArgumentException("Username cannot be null");
+        }
+        for (User user : Users.values()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null; // Return null if no user found
     }
 
     // Ajouter un nouvel utilisateur
@@ -47,5 +59,7 @@ public class UserDAO {
         }
         Users.remove(userId);
     }
+
+
 
 }
