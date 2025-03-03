@@ -16,7 +16,7 @@ public class Account {
     public Account() {}
 
     // Constructeur avec paramètres
-    public Account(String accountId, String userId, String Name, String nni, String bank, double balance, String currency) {
+    public Account(String accountId,  String nni, String bank, double balance) {
         this.accountId = accountId;
         this.nni = nni;
         this.bank = bank;

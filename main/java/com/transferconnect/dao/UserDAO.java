@@ -10,6 +10,7 @@ public class UserDAO {
     private static Map<String, User> Users = new HashMap<>();
 
     public UserDAO() {
+    	    Users.put("9801370078",new User("0000000001","system", "admin",   "admin", "admin", Role.ADMIN));
             Users.put("9801370078",new User("9801370078","Ahmed","medvall","ahmed23", "1234",Role.USER));  
     }
 
@@ -46,4 +47,5 @@ public class UserDAO {
         }
         Users.remove(userId);
     }
+
 }
