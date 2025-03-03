@@ -10,17 +10,19 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
   
-  	<servlet>
-		<servlet-name>jersey-servlet</servlet-name>
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>com.transferconnect.webservice</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>jersey-servlet</servlet-name>
-		<url-pattern>/ws-rest/*</url-pattern>
-	</servlet-mapping>
+<servlet>
+        <servlet-name>Jersey RESTful Application</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.transferconnect.controller</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey RESTful Application</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
 	
 </web-app>
