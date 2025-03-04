@@ -1,11 +1,16 @@
 package com.transferconnect.service;
 
-import com.transferconnect.dao.UserDAO;
-import com.transferconnect.model.User;
+import com.transferconnect.dao.*;
+import com.transferconnect.model.*;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
 public class UserService {
     private UserDAO userDAO = new UserDAO();
-
+    private AccountDAO accountDAO = new AccountDAO();
+    private TransferDAO transferDAO = new TransferDAO();
+    
     private static UserService instance;
 
     // Singleton Pattern لضمان وجود نسخة واحدة فقط
@@ -56,5 +61,30 @@ public class UserService {
     // التحقق مما إذا كان المستخدم موجودًا
     public boolean isUserExists(String userId) {
         return userDAO.getUserById(userId) != null;
+    }
+
+    // استرجاع المستخدم من الجلسة
+    public User getUserBySessionUsername(HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            return userDAO.getUserByConstraintKey(username);
+        }
+        return null;
+    }
+
+    // استرجاع جميع حسابات المستخدم من الجلسة
+    public Map<String, Account> getAllAccountsBySessionUser(HttpSession session) {
+        User user = getUserBySessionUsername(session);
+        if (user != null) {
+            return accountDAO.getAccountByConstraintKey(user.getNni());
+        }
+        return null;
+    }
+    public List<Transfer> getAllTransfersBySessionUser(HttpSession session) {
+        User user = getUserBySessionUsername(session);
+        if (user != null) {
+            return transferDAO.getTransfersByUserNni(user.getNni());
+        }
+        return null;
     }
 }
