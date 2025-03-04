@@ -12,6 +12,7 @@ public class UserDAO {
     static {
     	    Users.put("0000000001",new User("0000000001","system", "admin",   "admin", "admin", Role.ADMIN));
             Users.put("9801370078",new User("9801370078","Ahmed","medvall","ahmed23", "1234",Role.USER));  
+            Users.put("1234567890",new User("1234567890","fatou","saw","ftsaw", "1234",Role.USER)); 
     }
 
     // Récupérer un utilisateur par son ID
