@@ -1,4 +1,5 @@
-document.getElementById("logoutButton").addEventListener("click", function() {
+document.getElementById("logout-button").addEventListener("click", function() {
+
     fetch("/Controljee/api/logout", { method: "POST" })
     .then(response => response.json())  // Convertir la réponse en JSON
     .then(data => {

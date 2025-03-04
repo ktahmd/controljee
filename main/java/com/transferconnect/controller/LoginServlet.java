@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import com.transferconnect.model.LoginRequest;
+import com.transferconnect.model.User;
 import com.transferconnect.service.UserService;
 
 import java.io.IOException;
@@ -34,10 +35,23 @@ public class LoginServlet {
 
 		boolean isValid = userService.validateUser(request.getUsername(), request.getPassword());
 
-		if (isValid) {
+
+        if (isValid) {
+            // Correction de l'appel pour récupérer l'utilisateur
+            User user = userService.getUserByUsername(request.getUsername());
+
+            // Vérifier si l'utilisateur existe avant d'ajouter ses infos à la session
+            if (user == null) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("{\"success\": false, \"message\": \"Invalid username or password\"}")
+                        .type(MediaType.APPLICATION_JSON).build();
+            }
 			HttpSession session = httpRequest.getSession(true);
 			session.setAttribute("username", request.getUsername());
+			session.setAttribute("firstName", user.getFirstName());
+			session.setAttribute("lastName", user.getLastName());
 			System.out.println("Session Username: " + session.getAttribute("username"));
+			
 
 			JSONObject jsonResponse = new JSONObject();
 			jsonResponse.put("success", true);
