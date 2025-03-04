@@ -4,8 +4,11 @@ import java.util.Date;
 
 public class Transfer {
     private String transferId; // Identifiant unique du transfert
+    private String nni;
     private String senderAccountId; // Compte source
     private String receiverAccountId; // Compte destinataire
+    private String bankservice; 
+    private String versbankservice;
     private double amount; // Montant transféré
     private Date transferDate; // Date du transfert
     private String status; // Statut du transfert (ex: COMPLETED, PENDING, CANCELLED)
@@ -14,14 +17,19 @@ public class Transfer {
     public Transfer() {}
 
     // Constructeur avec paramètres
-    public Transfer(String transferId, String senderAccountId, String receiverAccountId, double amount, Date transferDate, String status) {
-        this.transferId = transferId;
-        this.senderAccountId = senderAccountId;
-        this.receiverAccountId = receiverAccountId;
-        this.amount = amount;
-        this.transferDate = transferDate;
-        this.status = status;
-    }
+    public Transfer(String transferId, String nni, String senderAccountId, String receiverAccountId, 
+            String bankservice, String versbankservice, double amount, Date transferDate, String status) {
+this.transferId = transferId;
+this.nni = nni;
+this.senderAccountId = senderAccountId;
+this.receiverAccountId = receiverAccountId;
+this.bankservice = bankservice;
+this.versbankservice = versbankservice;
+this.amount = amount;
+this.transferDate = transferDate;
+this.status = status;
+}
+
 
     // Getters et Setters
     public String getTransferId() { return transferId; }
@@ -41,4 +49,19 @@ public class Transfer {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    
+    public String getBankName() { return bankservice; }
+    public void setBankName(String bankservice) { this.bankservice = bankservice; }
+    public String getNni() {
+		return nni;
+	}
+    public void setNni(String nni) {
+		this.nni = nni;
+	}
+    public String getVersbankservice() {
+		return versbankservice;
+	}
+    public void setVersbankservice(String versbankservice) {
+		this.versbankservice = versbankservice;
+	}
 }

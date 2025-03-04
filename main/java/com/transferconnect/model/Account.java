@@ -10,14 +10,16 @@ public class Account {
     @JsonProperty
     private String bank; // Banque associée au compte
     @JsonProperty
+    private String Tel; // Banque associée au compte
+    @JsonProperty
     private double balance; // Solde du compte
 
-    // Constructeur par défaut
-    public Account() {}
+
 
     // Constructeur avec paramètres
-    public Account(String accountId,  String nni, String bank, double balance) {
+    public Account(String accountId,  String nni, String Tel, String bank, double balance) {
         this.accountId = accountId;
+        this.Tel=Tel;
         this.nni = nni;
         this.bank = bank;
         this.balance = balance;
@@ -35,4 +37,11 @@ public class Account {
 
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
+    
+    public String getTel() {
+		return Tel;
+	}
+    public void setTel(String tel) {
+		Tel = tel;
+	}
 }

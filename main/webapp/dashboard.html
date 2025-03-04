@@ -45,6 +45,21 @@
         .nav-item:hover {
             background-color: #f9f9f9;
         }
+        .nav-btn {
+    padding: 12px 0;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: black;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.nav-btn:hover {
+    background-color: #f9f9f9;
+}
         
         /* Main content */
         .main-content {
@@ -188,17 +203,13 @@
 </head>
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="logo">Money<span>Transfer</span> Connection</div>
-        <div class="user-info">
-            <div>Amadou Diallo</div>
-          
-        </div>
-        <div class="nav-item">Tableau de bord</div>
-        <div class="nav-item">Transferts</div>
-        <div class="nav-item">Historique</div>
-        <div class="nav-item">Déconnexion</div>
+<div class="sidebar">
+    <div class="logo">Money<span>Transfer</span> Connection</div>
+    <div class="user-info">
+        <div id="user-fullname">Chargement...</div> <!-- Ici, le nom sera mis à jour dynamiquement -->
     </div>
+     <button id="logout-button" class="nav-btn">Déconnexion</button> 
+</div>
 
     <!-- Main content -->
     <div class="main-content">
@@ -210,25 +221,11 @@
         <!-- Stats cards -->
         <div class="stats-container">
             <div class="stat-card">
-                <div class="stat-title">SOLDE TOTAL</div>
+                <div class="stat-title">TEST</div>
                 <div class="stat-value">150,000 MRU</div>
               
             </div>
-            <div class="stat-card">
-                <div class="stat-title">TRANSFERTS CE MOIS</div>
-                <div class="stat-value">23</div>
-                
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">MONTANT TRANSFÉRÉ</div>
-                <div class="stat-value">85,750 MRU</div>
-               
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">FRAIS PAYÉS</div>
-                <div class="stat-value">1,250 MRU</div>
-                
-            </div>
+
         </div>
 
         <!-- Recent transfers -->
@@ -242,7 +239,7 @@
                     <tr>
                         <th>ID Transaction</th>
                         <th>Date</th>
-                        <th>Destinataire</th>
+                        <th>Destinataire Tel</th>
                         <th>De</th>
                         <th>Vers</th>
                         <th>Montant</th>
@@ -253,39 +250,14 @@
                     <tr>
                         <td>#TR-7845</td>
                         <td>01/03/2025</td>
-                        <td>Mohamed Sy</td>
+                        <td>26393939</td>
                         <td>Bankily</td>
                         <td>Masrivi</td>
                         <td>15,000 MRU</td>
                         <td><span class="status completed">Complété</span></td>
                     </tr>
-                    <tr>
-                        <td>#TR-7844</td>
-                        <td>28/02/2025</td>
-                        <td>Aisha Mint</td>
-                        <td>Bankily</td>
-                        <td>Ghaza</td>
-                        <td>8,500 MRU</td>
-                        <td><span class="status completed">Complété</span></td>
-                    </tr>
-                    <tr>
-                        <td>#TR-7843</td>
-                        <td>27/02/2025</td>
-                        <td>Oumar Bâ</td>
-                        <td>Masrivi</td>
-                        <td>Marsoul</td>
-                        <td>25,000 MRU</td>
-                        <td><span class="status pending">En attente</span></td>
-                    </tr>
-                    <tr>
-                        <td>#TR-7842</td>
-                        <td>25/02/2025</td>
-                        <td>Fatima Diop</td>
-                        <td>Ghaza</td>
-                        <td>Bankily</td>
-                        <td>5,000 MRU</td>
-                        <td><span class="status failed">Échoué</span></td>
-                    </tr>
+
+
                 </tbody>
             </table>
         </div>
@@ -293,37 +265,38 @@
         <!-- New transfer form -->
         <div class="new-transfer-form" style="display: none;">
             <h3>Nouveau transfert</h3>
-            <div class="form-row">
-                <label>De (Service)</label>
-                <select>
-                    <option>Bankily</option>
-                    <option>Masrivi</option>
-                    <option>Ghaza</option>
-                    <option>Marsoul</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <label>Vers (Service)</label>
-                <select>
-                    <option>Bankily</option>
-                    <option>Masrivi</option>
-                    <option>Ghaza</option>
-                    <option>Marsoul</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <label>Numéro du destinataire</label>
-                <input type="text" placeholder="Entrez le numéro du destinataire">
-            </div>
-            <div class="form-row">
-                <label>Montant (MRU)</label>
-                <input type="number" placeholder="Entrez le montant">
-            </div>
-            <div class="form-row">
-                <label>Motif du transfert</label>
-                <input type="text" placeholder="Entrez le motif du transfert">
-            </div>
-            <button class="transfer-btn">Transférer maintenant</button>
+            <form id="transferForm">
+    <div class="form-row">
+        <label>De (Service)</label>
+        <select id="senderService">
+            <option>Bankily</option>
+            <option>Sadad</option>
+            <option>Bimbank</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label>Vers (Service)</label>
+        <select id="receiverService">
+            <option>Bankily</option>
+            <option>Sadad</option>
+            <option>Bimbank</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label>Numéro du destinataire</label>
+        <input type="text" id="receiverNumber" placeholder="Entrez le numéro du destinataire">
+    </div>
+    <div class="form-row">
+        <label>Montant (MRU)</label>
+        <input type="number" id="amount" placeholder="Entrez le montant">
+    </div>
+    <div class="form-row">
+        <label>Motif du transfert</label>
+        <input type="text" id="reason" placeholder="Entrez le motif du transfert">
+    </div>
+    <button class=".transfer-btn" type="submit">Transférer maintenant</button>
+</form>
+
         </div>
     </div>
 
@@ -346,5 +319,10 @@
             });
         });
     </script>
+    <script src="assets/js/Accounts.js"></script>
+    <script src="assets/js/Transfers.js"></script>	
+    <script src="assets/js/Session.js"></script>	
+    <script src="assets/js/logout.js"></script>	
+     <script src="assets/js/NewTransfer.js"></script>	
 </body>
 </html>
