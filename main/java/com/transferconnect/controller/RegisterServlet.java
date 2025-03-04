@@ -18,7 +18,7 @@ public class RegisterServlet {
     private final UserService userService = UserService.getInstance();
     private final UserDAO userDAO = new UserDAO();
 
-    /*@POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(RegisterRequest request) {
@@ -27,18 +27,6 @@ public class RegisterServlet {
             return Response.status(Response.Status.CONFLICT)
                           .entity("{\"message\":\"Username already exists\",\"success\":false}")
                           .build();
-        }*/
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response register(RegisterRequest request) {
-        // Validation des données
-        if (request.getNni() == null || request.getFirstName() == null || 
-            request.getLastName() == null || request.getUsername() == null || 
-            request.getPassword() == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                         .entity("{\"message\":\"All fields are required\",\"success\":false}")
-                         .build();
         }
         
         // Check if NNI already exists
