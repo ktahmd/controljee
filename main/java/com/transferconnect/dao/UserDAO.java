@@ -1,8 +1,12 @@
 package com.transferconnect.dao;
 
 import com.transferconnect.model.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UserDAO {
 
@@ -43,6 +47,7 @@ public class UserDAO {
         Users.put(user.getNni(), user);
     }
 
+    
     // Mettre à jour un utilisateur existant
     public void updateUser(String userId, User updatedUser) {
         if (userId == null || updatedUser == null) {
@@ -61,6 +66,28 @@ public class UserDAO {
         Users.remove(userId);
     }
 
+ // Récupérer les utilisateurs par rôle
+    public List<User> getUsersByRole(Role role) {
+        return Users.values().stream()
+                .filter(user -> user.getRole() == role)
+                .collect(Collectors.toList());
+    }
 
+ // Compter le nombre total d'utilisateurs
+    public int countUsers() {
+        return Users.size();
+    }
+    
+ // Compter les utilisateurs par rôle
+    public int countUsersByRole(Role role) {
+        return (int) Users.values().stream()
+                .filter(user -> user.getRole() == role)
+                .count();
+    }
+    
+ // Ajouter cette méthode pour récupérer tous les utilisateurs
+    public List<User> getAllUsers() {
+        return new ArrayList<>(Users.values());
+    }
 
 }
