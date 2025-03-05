@@ -86,7 +86,7 @@ nav a:hover {
 }
 
 nav a.active {
-    background-color: #3498db;
+    background-color: #2db949;
     font-weight: bold;
 }
 
@@ -172,7 +172,7 @@ tr:hover {
 }
 
 button {
-    background-color: #3498db;
+    background-color: #2db949;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -183,7 +183,7 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #259e3d;
 }
 
 .edit-btn, .manage-assignment-btn {
