@@ -195,3 +195,69 @@ function removeManagerFromService(serviceId) {
     console.log('Retirer le responsable du service:', serviceId);
     // Logique pour retirer un responsable d'un service
 }
+// Ajouter ces fonctions à votre admin.js existant
+
+function openServiceModal() {
+    const modal = document.getElementById('service-modal');
+    modal.style.display = 'block';
+}
+
+function closeServiceModal() {
+    const modal = document.getElementById('service-modal');
+    modal.style.display = 'none';
+}
+
+function handleServiceSubmit(event) {
+    event.preventDefault();
+    
+    const serviceCode = document.getElementById('service-code').value;
+    const serviceName = document.getElementById('service-name').value;
+    const serviceStatus = document.getElementById('service-status').value;
+    
+    fetch('/Controljee/api/admin/service/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            serviceId: serviceCode,
+            serviceName: serviceName,
+            active: serviceStatus === 'true'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Service ajouté avec succès');
+            closeServiceModal();
+            loadServices(); // Recharger la liste des services
+        } else {
+            alert('Erreur : ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de l\'ajout du service');
+    });
+}
+
+function setupEventListeners() {
+    // Ajouter ces écouteurs d'événements
+    const addServiceBtn = document.getElementById('add-service-btn');
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', openServiceModal);
+    }
+    
+    const serviceForm = document.getElementById('service-form');
+    if (serviceForm) {
+        serviceForm.addEventListener('submit', handleServiceSubmit);
+    }
+    
+    const closeModalButtons = document.querySelectorAll('#service-modal .close');
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', closeServiceModal);
+    });
+}
+
+// Ajouter cet appel à la fin de votre DOMContentLoaded event listener
+setupEventListeners();
