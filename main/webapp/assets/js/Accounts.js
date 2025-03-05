@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(accounts => {
             const statsContainer = document.querySelector(".stats-container");
-            statsContainer.innerHTML = ""; // مسح المحتوى السابق
+            statsContainer.innerHTML = ""; 
 
             if (!accounts || Object.keys(accounts).length === 0) {
                 statsContainer.innerHTML = `<div class="stat-card">

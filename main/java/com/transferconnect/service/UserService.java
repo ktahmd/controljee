@@ -13,7 +13,7 @@ public class UserService {
     
     private static UserService instance;
 
-    // Singleton Pattern لضمان وجود نسخة واحدة فقط
+    // Utilisation du pattern Singleton pour garantir une seule instance
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();
@@ -21,22 +21,23 @@ public class UserService {
         return instance;
     }
 
-    // استرجاع المستخدم عن طريق الـ ID
+    // Récupérer un utilisateur par son ID
     public User getUserById(String userId) {
         return userDAO.getUserById(userId);
     }
-    // استرجاع المستخدم عن طريق اسم المستخدم
+    
+    // Récupérer un utilisateur par son nom d'utilisateur
     public User getUserByUsername(String username) {
         return userDAO.getUserByConstraintKey(username);
     }
 
-    // التحقق من صحة المستخدم
+    // Vérifier la validité des identifiants d'un utilisateur
     public boolean validateUser(String username, String password) {
         User user = userDAO.getUserByConstraintKey(username);
         return user != null && user.getPassword().equals(password);
     }
 
-    // تغيير كلمة المرور
+    // Changer le mot de passe d'un utilisateur
     public boolean changePassword(String userId, String oldPassword, String newPassword) {
         User user = userDAO.getUserById(userId);
         if (user != null && user.getPassword().equals(oldPassword)) {
@@ -47,7 +48,7 @@ public class UserService {
         return false;
     }
 
-    // إعادة تعيين كلمة المرور
+    // Réinitialiser le mot de passe d'un utilisateur
     public boolean resetPassword(String userId, String newPassword) {
         User user = userDAO.getUserById(userId);
         if (user != null) {
@@ -58,12 +59,12 @@ public class UserService {
         return false;
     }
 
-    // التحقق مما إذا كان المستخدم موجودًا
+    // Vérifier si un utilisateur existe
     public boolean isUserExists(String userId) {
         return userDAO.getUserById(userId) != null;
     }
 
-    // استرجاع المستخدم من الجلسة
+    // Récupérer un utilisateur à partir de la session
     public User getUserBySessionUsername(HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username != null) {
@@ -72,7 +73,7 @@ public class UserService {
         return null;
     }
 
-    // استرجاع جميع حسابات المستخدم من الجلسة
+    // Récupérer tous les comptes d'un utilisateur à partir de la session
     public Map<String, Account> getAllAccountsBySessionUser(HttpSession session) {
         User user = getUserBySessionUsername(session);
         if (user != null) {
@@ -80,6 +81,8 @@ public class UserService {
         }
         return null;
     }
+    
+    // Récupérer toutes les transactions d'un utilisateur à partir de la session
     public List<Transfer> getAllTransfersBySessionUser(HttpSession session) {
         User user = getUserBySessionUsername(session);
         if (user != null) {
