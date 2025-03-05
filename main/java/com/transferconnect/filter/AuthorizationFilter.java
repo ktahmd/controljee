@@ -1,5 +1,6 @@
 package com.transferconnect.filter;
 
+import com.transferconnect.dao.UserDAO;
 import com.transferconnect.model.Role;
 import com.transferconnect.model.User;
 
@@ -7,112 +8,73 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-@WebFilter(urlPatterns = {"/api/*"})
+@WebFilter(urlPatterns = {"/*"})
 public class AuthorizationFilter implements Filter {
-    
-    // Définition des droits d'accès par URL et rôle
-    private Map<String, Set<Role>> urlAccessRights;
+
+    private UserDAO userDAO; // Declare UserDAO
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialisation des droits d'accès
-        urlAccessRights = new HashMap<>();	
-        
-        // Configuration des droits d'accès pour les différentes URLs
-        
-        // URLs pour l'administrateur
-        addUrlAccessRight("/api/admin/*", Role.ADMIN);
-        addUrlAccessRight("/api/service/create", Role.ADMIN);
-        addUrlAccessRight("/api/user/role", Role.ADMIN);
-        addUrlAccessRight("/admin-dashboard.html", Role.ADMIN);
-        
-        // URLs pour les responsables d'agence
-        addUrlAccessRight("/api/agency/*", Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/transfer/cancel", Role.AGENCY_MANAGER, Role.ADMIN);
-        
-        // URLs pour tous les utilisateurs authentifiés
-        addUrlAccessRight("/api/accounts*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/accounts/session*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/transfers", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/transfers/session", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/transfers/new", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/session", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/session/user", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/dashboard.html", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        // Initialize UserDAO
+        userDAO = new UserDAO();
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        
-        // Récupération de l'utilisateur depuis l'AttributeRequest (ajouté par AuthenticationFilter)
-        User user = (User) request.getAttribute("user");
-        
-        // Si l'utilisateur n'est pas défini, c'est que l'AuthenticationFilter a laissé passer la requête
-        // sans authentification, donc on continue simplement
-        if (user == null) {
+
+        // Get the session (do not create a new session if it doesn't exist)
+        HttpSession session = httpRequest.getSession(false);
+
+        // If there's no session, do nothing (allow the request to proceed)
+        if (session == null) {
             chain.doFilter(request, response);
             return;
         }
-        
-        // Vérification des droits d'accès
-        String requestURI = httpRequest.getRequestURI();
-        if (!hasAccess(requestURI, user.getRole())) {
-            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            httpResponse.getWriter().write("Access forbidden: insufficient privileges");
+
+        // Get the username from the session
+        String username = (String) session.getAttribute("username");
+
+        // If the username is not in the session, do nothing (allow the request to proceed)
+        if (username == null) {
+            chain.doFilter(request, response);
             return;
         }
-        
-        // Continuer le traitement de la requête
-        chain.doFilter(request, response);
+
+        // Fetch the user from the UserDAO based on the username
+        User user = userDAO.getUserByConstraintKey(username);
+
+        // If the user is not found in the database (shouldn't happen if authentication works properly)
+        if (user == null) {
+            chain.doFilter(request, response); // Just pass the request along
+            return;
+        }
+
+        // Get the request URI
+        String requestURI = httpRequest.getRequestURI();
+
+        // Check if the requested URL is "/admin-dashboard.html"
+        if (requestURI.equals("/Controljee/admin-dashboard.html")) {
+            // If the user is not an Admin, deny access (403 Forbidden)
+            if (user.getRole() != Role.ADMIN) {
+                httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                httpResponse.getWriter().write("Access forbidden: insufficient privileges");
+                return;
+            }
+        }
+
+        // If the requested URL is any other URL (excluding "/admin-dashboard.html"), allow access
+        chain.doFilter(request, response); // Continue processing the request
     }
 
     @Override
     public void destroy() {
-        // Nettoyage des ressources
-    }
-    
-    private void addUrlAccessRight(String urlPattern, Role... roles) {
-        Set<Role> allowedRoles = urlAccessRights.computeIfAbsent(urlPattern, k -> new HashSet<>());
-        for (Role role : roles) {
-            allowedRoles.add(role);
-        }
-    }
-    
-    private boolean hasAccess(String requestURI, Role userRole) {
-        // Parcourir toutes les règles d'accès définies
-        for (Map.Entry<String, Set<Role>> entry : urlAccessRights.entrySet()) {
-            String urlPattern = entry.getKey();
-            Set<Role> allowedRoles = entry.getValue();
-            
-            // Vérifier si l'URL de la requête correspond au pattern
-            if (matchesUrlPattern(requestURI, urlPattern)) {
-                // Vérifier si le rôle de l'utilisateur est autorisé
-                return allowedRoles.contains(userRole);
-            }
-        }
-        
-        // Par défaut, si aucune règle ne correspond, on autorise l'accès
-        // (c'est l'AuthenticationFilter qui s'occupe de vérifier que l'utilisateur est authentifié)
-        return true;
-    }
-    
-    private boolean matchesUrlPattern(String requestURI, String urlPattern) {
-        // Logique simplifiée de correspondance des patterns d'URL
-        if (urlPattern.endsWith("/*")) {
-            String prefix = urlPattern.substring(0, urlPattern.length() - 2);
-            return requestURI.startsWith(prefix);
-        } else {
-            return requestURI.equals(urlPattern);
-        }
+        // Clean up if needed
     }
 }
