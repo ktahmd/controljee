@@ -17,7 +17,8 @@ public class ServiceDAO {
         services.put("BNK", new Service("BNK", "Bankily", true));
         services.put("MSV", new Service("MSV", "Masrivi", true));
         services.put("GHZ", new Service("GHZ", "Ghaza", true));
-        services.put("MRS", new Service("MRS", "Marsoul", true));
+        services.put("BB", new Service("BB", "Bimbank", true));
+        services.put("SDD", new Service("SDD", "Sadad", true));
     }
     
     // Récupérer un service par son ID
@@ -29,7 +30,7 @@ public class ServiceDAO {
     }
     
     // Récupérer tous les services
-    public List<Service> getAllServices() {
+    public static List<Service> getAllServices() {
         return new ArrayList<>(services.values());
     }
     
