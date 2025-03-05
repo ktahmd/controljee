@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 services.forEach(service => {
                     if (service.active) {
                         const option = document.createElement("option");
-                        option.value = service.id;
+                        option.value = service.name;
                         option.textContent = service.name;
                         
                         senderServiceSelect.appendChild(option.cloneNode(true));
