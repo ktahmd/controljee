@@ -30,17 +30,21 @@ public class AuthorizationFilter implements Filter {
         addUrlAccessRight("/api/admin/*", Role.ADMIN);
         addUrlAccessRight("/api/service/create", Role.ADMIN);
         addUrlAccessRight("/api/user/role", Role.ADMIN);
+        addUrlAccessRight("/admin-dashboard.html", Role.ADMIN);
         
         // URLs pour les responsables d'agence
         addUrlAccessRight("/api/agency/*", Role.AGENCY_MANAGER, Role.ADMIN);
         addUrlAccessRight("/api/transfer/cancel", Role.AGENCY_MANAGER, Role.ADMIN);
         
         // URLs pour tous les utilisateurs authentifiés
-        addUrlAccessRight("/api/login/*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/account/*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/transfer/create", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/user/profile", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
-        addUrlAccessRight("/api/user/password", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/accounts*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/accounts/session*", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/transfers", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/transfers/session", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/transfers/new", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/session", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/api/session/user", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
+        addUrlAccessRight("/dashboard.html", Role.USER, Role.AGENCY_MANAGER, Role.ADMIN);
     }
 
     @Override
